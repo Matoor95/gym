@@ -2,11 +2,11 @@
 define('BASE', $_SERVER['DOCUMENT_ROOT']);
 // echo BASE;
 // print_r(BASE);
-include(BASE . "/gestionTS/function.php");
+include(BASE . "/gestionSalle/function.php");
 start_session();
 
 
-if (checker($_SESSION['email'], $_SESSION['password'], $_SESSION['role']) == false) {
+if (checker($_SESSION['email'], $_SESSION['password']) == false) {
     header("location:../index.php?cn=no");
     die();
 }
@@ -20,11 +20,10 @@ try {
     $cnx = connecter_db();
 
     // preparation de la requete sql
-    $r = $cnx->prepare("select m.*  from user u left join ligne_user_mission l on u.id_user=l.id_user right join missions m on l.id_mission=m.id_mission
-    where u.id_user=?  order by u.id_user");
+    $r = $cnx->prepare("SELECT * FROM plan order by pid");
     //execution de la requete 
-    $r->execute([$_SESSION["id_user"]]);
-    $mission = $r->fetchAll();
+    $r->execute();
+    $plan = $r->fetchAll();
 } catch (PDOException $e) {
     echo "Erreur     " . $e->getMessage();
 }
@@ -108,7 +107,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Brand Logo -->
             <a href="home.php" class="brand-link">
                 <img src="../images/logofinatu.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-4" style="opacity: .7">
-                <span class="brand-text font-weight-light">Gestion de Temps</span>
+                <span class="brand-text font-weight-light">Gestion salle de sport</span>
             </a>
 
             <!-- Sidebar -->
@@ -141,10 +140,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <!--lien vers la page d'ajoute d'utilisateur-->
-                                    <button type="button" class="btn btn-light text-black" data-bs-toggle="modal" data-bs-target="#etudiant">
-                                        <i class="fas fa-tasks"></i>
-                                        Ajouter une mission
-                                    </button>
+                                    <a href="index.php" class="nav-link">
+                                        <i class="fas fa-user-graduate"></i>
+                                        <p>client</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fas fa-user-graduate"></i>
+                                        <p>Forfait</p>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -172,97 +177,133 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- /.content-header -->
 
             <!-- Main content -->
-            <section class="container">
+            <div class="container-fluid">
                 <!--lien vers la page d'ajoute d'utilisateur-->
                 <!-- <a href="#" class="btn btn-large btn-info" id="bouton_ajouter">
                     <i class="fas fa-plus"></i> &nbsp; Ajouter un client
                 </a> -->
-                <div class="row">
-                    <div class="col-md-12 col-xs-12">
-                        <!-- Button trigger modal -->
-                        <!-- Modal -->
-                        <div class="modal fade" id="etudiant" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title  w-100 text-center text-uppercase">Ajouter un TS </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
+                <div class="col-lg-12">
+                    <div class="row mb-4 mt-4">
+                        <div class="col-md-12">
 
-                                    <div class="modal-body">
-                                        <form method="post" action="store.php">
-                                            <!--creation de la form avec la met hod post-->
-                                            <div class="mb-3">
-                                                nom mission: <input type="text" name="nom_mission" id="nom" class="form-control">
-                                            </div>
-                                            <div class="mb-3">
-                                                tache: <input type="text" name="tache" id="tache" class="form-control">
-                                            </div>
-                                            <div class="mb-3">
-                                                date: <input type="date" name="date" id="date" class="form-control">
-                                            </div>
-                                            <div class="mb-3">
-                                                nombre d'heure: <input type="number" name="nbre" id="nbre" class="form-control">
-                                            </div>
-                                            <div class="mb-3 text-center">
-                                                <button class="btn btn-primary col-md-6">Valider</button>
-                                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- FORM Panel -->
 
-                                        </form>
+                        <!-- Table Panel -->
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <b>Active Member List</b>
+                                    <span class="">
 
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                        <button class="btn btn-primary btn-block btn-sm col-sm-2 float-right" type="button" data-bs-toggle="modal" data-bs-target="#etudiant">
+                                            <i class="fa fa-plus"></i> New</button>
+                                    </span>
+                                </div>
+                                <div class="card-body">
+                                    <!-- <h3 class="text-center my-5  text-danger">
+                                        Liste des clients
+                                    </h3> -->
+                                    <table class="table table-tripped" id="matar">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">forfait </th>
+                                                <th scope="col">Description</th>
+                                                <!-- <th scope="col">Nom</th>
+                                 <th scope="col">Prenom</th> -->
+                                                <th scope="col">validity</th>
+                                                <th scope="col">amount</th>
+                                                <!-- <th scope="col">Email</th> -->
+                                                <th scope="col">active </th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($plan as $p) { ?>
+                                                <tr>
+                                                    <td scope="row"><?= $p['pid'] ?></td>
+                                                    <td scope="row"><?= $p['planName'] ?></td>
+                                                    <td scope="row"><?= $p['description'] ?></td>
+                                                    <td scope="row"><?= $p['validity'] ?></td>
+                                                    <td scope="row"><?= $p['amount'] ?></td>
+                                                    <td scope="row"><?= $p['active'] ?></td>
 
-                                    </div>
+
+
+                                                    <td><a href="delete_Client.php?id=<?= $p['id_client']; ?>" class="del_btn"><i class="fas fa-trash text-red"></i></td>
+                                                </tr>
+                                            <?php } ?>
+
+                                        </tbody>
+                                    </table>
+                                    <?php
+                                    if (isset($_GET['m'])) { ?>
+                                        <div class="flash-data" data-flashdata="<?php echo $_GET['m']; ?>"></div>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
-
+                        <!-- Table Panel -->
                     </div>
-
                 </div>
 
+                <div class="modal fade" id="plan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title  w-100 text-center text-uppercase">Ajouter un client</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
 
-                <div class="col-md-12 col-xs-12">
-                    <h3 class="text-center my-5  text-danger">
-                        Liste des missions
-                    </h3>
-                    <table class="table table-tripped" id="matar">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nom de la mission</th>
-                                <th scope="col">Tâche effectué</th>
-                                <!-- <th scope="col">Nom</th>
-                                <th scope="col">Prenom</th> -->
-                                <th scope="col">Date</th>
-                                <!-- <th scope="col">Email</th> -->
-                                <th scope="col">Nombre d'heure </th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($mission as $p) { ?>
-                                <tr>
-                                    <td scope="row"><?= $p['id_mission'] ?></td>
-                                    <td scope="row"><?= $p['nom_mission'] ?></td>
-                                    <td scope="row"><?= $p['tache'] ?></td>
-                                    <td scope="row"><?= $p['date'] ?></td>
-                                    <td scope="row"><?= $p['nbre_heure'] ?>H</td>
-                                    <td><a href="delete.php?id=<?= $p['id_mission']; ?>" class="del_btn"><i class="fas fa-trash text-red"></i></td>
-                                </tr>
-                            <?php } ?>
+                            <div class="modal-body">
+                                <form method="post" action="store_plan.php">
+                                    <!--creation de la form avec la met hod post-->
+                                    <div class="mb-3">
+                                        <?php
+                                        function getRandomWord($len = 6)
+                                        {
+                                            $word = array_merge(range('A', 'Z'));
+                                            shuffle($word);
+                                            return substr(implode($word), 0, $len);
+                                        }
 
-                        </tbody>
-                    </table>
-                    <?php
-                    if (isset($_GET['m'])) { ?>
-                        <div class="flash-data" data-flashdata="<?php echo $_GET['m']; ?>"></div>
-                    <?php } ?>
+                                        ?>
+                                        <input type="text" name="planid" class="form-control" id="planid" readonly value="<?= getRandomWord(); ?>">
+                                    </div>
+                                    <div class="mb-3">
+                                        Nom forfait: <input type="text" name="nom" id="nom" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        Description: <input type="text" name="desc" id="desc" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        validité: <input type="number" name="val" id="val" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        Prix: <input type="number" name="prix" id="prix" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        Active: <input type="text" name="active" id="active" class="form-control" required>
+                                    </div>
+                                    <div class="mb-3 text-center">
+                                        <button class="btn btn-primary col-md-6">Valider</button>
+                                    </div>
 
+                                </form>
 
-            </section>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
 
         </div>
@@ -334,7 +375,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             e.preventDefault();
             const href = $(this).attr('href');
             Swal.fire({
-                title: 'voulez vous supprimercette TS?',
+                title: 'voulez vous supprimer ce client ?',
                 text: "Vous ne pourrez pas revenir en arrière!",
                 icon: 'warning',
                 showCancelButton: true,
@@ -353,8 +394,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         if (flashdata) {
             swal.fire({
                 type: 'success',
-                title: 'TS supprimé',
-                text: 'La TS a été supprimé'
+                title: 'client supprimé',
+                text: 'Le client a été supprimé'
             })
         }
     </script>

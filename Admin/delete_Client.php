@@ -8,8 +8,9 @@ start_session();
 try{
 
     // recuperer les donnees depuis le lien 
-  $id=$_GET['id_client'];
+  $id=$_GET['id'];
 //    echo "id est $id";
+
 
 //    exit();
     //connexion bd

@@ -2,7 +2,7 @@
 define('BASE', $_SERVER['DOCUMENT_ROOT']);
 // echo BASE;
 // print_r(BASE);
-include(BASE . "/gestionsalle/function.php");
+include(BASE . "/gestionSalle/function.php");
 start_session();
 
 
@@ -105,9 +105,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4 position-fixed">
             <!-- Brand Logo -->
-            <a href="home.php" class="brand-link">
-                <img src="../images/logofinatu.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-4" style="opacity: .7">
-                <span class="brand-text font-weight-light">Gestion salle de sport</span>
+            <a href="index.php" class="brand-link">
+                <img src="../images/batallogo.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-4" style="opacity: .7">
+                <span class="brand-text font-weight-light">CLUB SPORTIF BATAL </span>
             </a>
 
             <!-- Sidebar -->
@@ -115,7 +115,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="../images/logofinatu.png" class="img-circle elevation-2" alt="User Image">
+                        <img src="../images/batallogo.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block"> <?= $_SESSION['prenom'] . " " . $_SESSION['nom'] ?>
@@ -140,11 +140,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <!--lien vers la page d'ajoute d'utilisateur-->
-                                    <button type="button" class="btn btn-light text-black" data-bs-toggle="modal" data-bs-target="#etudiant">
-                                        <i class="fas fa-tasks"></i>
-                                        Ajouter un client
-                                    </button>
+                                    <a href="#" class="nav-link">
+                                        <i class="fas fa-user"></i>
+                                        <p>Client</p>
+                                    </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="plan.php" class="nav-link">
+                                        <i class="fas fa-receipt"></i>
+                                        <p>Forfait</p>
+                                    </a>
                             </ul>
                         </li>
 
@@ -171,81 +176,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- /.content-header -->
 
             <!-- Main content -->
-            <section class="container">
-                <!--lien vers la page d'ajoute d'utilisateur-->
-                <!-- <a href="#" class="btn btn-large btn-info" id="bouton_ajouter">
+            <div class="container-fluid">
+                <div class="col-lg-12">
+
+                    <!--lien vers la page d'ajoute d'utilisateur-->
+                    <!-- <a href="#" class="btn btn-large btn-info" id="bouton_ajouter">
                     <i class="fas fa-plus"></i> &nbsp; Ajouter un client
                 </a> -->
-                <div class="row">
-                    <div class="col-md-12 col-xs-12">
-                        <!-- Button trigger modal -->
-                        <!-- Modal -->
-                        <div class="modal fade" id="etudiant" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title  w-100 text-center text-uppercase">Ajouter un client</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
+                    <div class="row mb-5 mt-5">
+                        <div class="col-md-12 ">
+                            <div class="card-header">
+                                <b>Active Member List</b>
+                                <span class="">
 
-                                    <div class="modal-body">
-                                        <form method="post" action="store.php">
-                                            <!--creation de la form avec la met hod post-->
-                                            <div class="mb-3">
-                                                Nom: <input type="text" name="nom" id="nom" class="form-control" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                Prenom: <input type="text" name="prenom" id="prenom" class="form-control" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                Date de naissance: <input type="date" name="date" id="date" class="form-control" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                date: <input type="date" name="date" id="date" class="form-control" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                Assurance: <input type="text" name="text" id="email" class="form-control" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                tel: <input type="number" name="tel" id="tel" class="form-control" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                Discipline: <select name="discipline" id="" required>
-                                                    <option value="" selected>...</option>
-                                                    <option value="booxe">Boxe</option>
-                                                    <option value="musculation">Musculation</option>
-                                                    <option value="taekwondo">taekwondo</option>
-                                                    <option value="mma">MMA</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                Numero vaccin: <input type="number" name="numero_vacc" id="numero_vac" class="form-control" required>
-                                            </div>
-                                            <div class="mb-3 text-center">
-                                                <button class="btn btn-primary col-md-6">Valider</button>
-                                            </div>
-
-                                        </form>
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-
-                                    </div>
-                                </div>
+                                    <button class="btn btn-primary btn-block btn-sm col-sm-2 float-right" type="button" data-bs-toggle="modal" data-bs-target="#etudiant">
+                                        <i class="fa fa-plus"></i> New</button>
+                                </span>
                             </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="col-md-12 col-xs-12">
-                    <h3 class="text-center my-5  text-danger">
-                        Liste des clients
-                    </h3>
-                    <table class="table table-tripped" id="matar">
+                            <!-- Button trigger modal -->
+                            <!-- Modal -->
+                            <div class="card-body">
+                            <table class="table table-tripped" id="matar">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -275,7 +226,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <td scope="row"><?= $p['numero_vacc'] ?></td>
 
 
-                                    <td><a href="delete_Client.php?id=<?= $p['id_mission']; ?>" class="del_btn"><i class="fas fa-trash text-red"></i></td>
+                                    <td><a href="delete_Client.php?id=<?= $p['id_client']; ?>" class="del_btn"><i class="fas fa-trash text-red"></i></td>
                                 </tr>
                             <?php } ?>
 
@@ -285,41 +236,99 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     if (isset($_GET['m'])) { ?>
                         <div class="flash-data" data-flashdata="<?php echo $_GET['m']; ?>"></div>
                     <?php } ?>
+                                <div class="modal fade" id="etudiant" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title  w-100 text-center text-uppercase">Ajouter un client</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <form method="post" action="store.php">
+                                                    <!--creation de la form avec la met hod post-->
+                                                    <div class="mb-3">
+                                                        Nom: <input type="text" name="nom" id="nom" class="form-control" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        Prenom: <input type="text" name="prenom" id="prenom" class="form-control" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        Date de naissance: <input type="date" name="date" id="date" class="form-control" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        date: <input type="date" name="date" id="date" class="form-control" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        Assurance: <input type="text" name="text" id="email" class="form-control" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        tel: <input type="number" name="tel" id="tel" class="form-control" required>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        Discipline: <select name="discipline" id="" required>
+                                                            <option value="" selected>...</option>
+                                                            <option value="booxe">Boxe</option>
+                                                            <option value="musculation">Musculation</option>
+                                                            <option value="taekwondo">taekwondo</option>
+                                                            <option value="mma">MMA</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        Numero vaccin: <input type="number" name="numero_vacc" id="numero_vac" class="form-control" required>
+                                                    </div>
+                                                    <div class="mb-3 text-center">
+                                                        <button class="btn btn-primary col-md-6">Valider</button>
+                                                    </div>
+
+                                                </form>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
 
 
-            </section>
+            </div>
 
 
+
+
+
+
+
+
+
+            <!-- /.content -->
         </div>
 
+        <!-- /.content-wrapper -->
 
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>Sidebar content</p>
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
 
+        <!-- Main Footer -->
+        <?php
+        include_once "footer.php";
 
-
-
-
-
-
-        <!-- /.content -->
-    </div>
-
-    <!-- /.content-wrapper -->
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-        <div class="p-3">
-            <h5>Title</h5>
-            <p>Sidebar content</p>
-        </div>
-    </aside>
-    <!-- /.control-sidebar -->
-
-    <!-- Main Footer -->
-    <?php
-    include_once "footer.php";
-
-    ?>
+        ?>
     </div>
     </div>
     <!-- ./wrapper -->
@@ -359,7 +368,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             e.preventDefault();
             const href = $(this).attr('href');
             Swal.fire({
-                title: 'voulez vous supprimercette TS?',
+                title: 'voulez vous supprimer ce client ?',
                 text: "Vous ne pourrez pas revenir en arrière!",
                 icon: 'warning',
                 showCancelButton: true,
@@ -378,8 +387,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         if (flashdata) {
             swal.fire({
                 type: 'success',
-                title: 'TS supprimé',
-                text: 'La TS a été supprimé'
+                title: 'client supprimé',
+                text: 'Le client a été supprimé'
             })
         }
     </script>

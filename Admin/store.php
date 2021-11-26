@@ -11,7 +11,7 @@ try{
     $nom=$_POST['nom'];
     $prenom=$_POST['prenom'];
     $date=$_POST['date'];
-    $email=$_POST['email'];
+    $ema=$_POST['date'];
     $tel = $_POST['tel'];
     $discipline = $_POST['discipline'];
     $numero_vac = $_POST['numero_vacc'];
@@ -20,9 +20,9 @@ try{
     //connexion a la bd
     $cnx = connecter_db();
     //inserer les donnees dans la base de données
-    $r=$cnx->prepare("insert into client (nom,prenom,date_naiss,email,tel,discipline,numero_vacc) values(?,?,?,?,?,?,?)");
+    $r=$cnx->prepare("insert into client (nom,prenom,date_naiss,date,tel,discipline,numero_vacc) values(?,?,?,?,?,?,?)");
     
-    $r->execute([$nom,$prenom,$date,$email,$tel,$discipline,$numero_vac]);
+    $r->execute([$nom,$prenom,$date,$ema,$tel,$discipline,$numero_vac]);
     $_SESSION['message1']="mission ajouter avec succés";
     $_SESSION['status']="success";
 }catch (PDOException $e) {
