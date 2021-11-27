@@ -257,7 +257,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         Date de naissance: <input type="date" name="date" id="date" class="form-control" required>
                                                     </div>
                                                     <div class="mb-3">
-                                                        date: <input type="date" name="date" id="date" class="form-control" required>
+                                                        Date d'inscription: <input type="date" name="date" id="date" class="form-control" required>
                                                     </div>
                                                     <div class="mb-3">
                                                         Assurance: <input type="text" name="text" id="email" class="form-control" required>

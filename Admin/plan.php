@@ -64,7 +64,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="wrapper" style="overflow-x: hidden;">
 
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-light bg-gradient-gray-dark  fixed-top">
+        <nav class="main-header navbar navbar-expand navbar-light bg-blue  fixed-top">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -106,7 +106,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <aside class="main-sidebar sidebar-dark-primary elevation-4 position-fixed">
             <!-- Brand Logo -->
             <a href="home.php" class="brand-link">
-                <img src="../images/logofinatu.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-4" style="opacity: .7">
+                <img src="../images/batallogo.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-4" style="opacity: .7">
                 <span class="brand-text font-weight-light">Gestion salle de sport</span>
             </a>
 
@@ -115,7 +115,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="../images/logofinatu.png" class="img-circle elevation-2" alt="User Image">
+                        <img src="../images/batallogo.jpg" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
                         <a href="#" class="d-block"> <?= $_SESSION['prenom'] . " " . $_SESSION['nom'] ?>
@@ -198,7 +198,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <b>Active Member List</b>
                                     <span class="">
 
-                                        <button class="btn btn-primary btn-block btn-sm col-sm-2 float-right" type="button" data-bs-toggle="modal" data-bs-target="#etudiant">
+                                        <button class="btn btn-primary btn-block btn-sm col-sm-2 float-right" type="button" data-bs-toggle="modal" data-bs-target="#plan">
                                             <i class="fa fa-plus"></i> New</button>
                                     </span>
                                 </div>
@@ -233,7 +233,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 
-                                                    <td><a href="delete_Client.php?id=<?= $p['id_client']; ?>" class="del_btn"><i class="fas fa-trash text-red"></i></td>
+                                                    <td><a href="delete_plan.php?id=<?= $p['pid']; ?>" class="del_btn"><i class="fas fa-trash text-red"></i></td>
                                                 </tr>
                                             <?php } ?>
 
